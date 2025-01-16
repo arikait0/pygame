@@ -9,6 +9,7 @@ SCREEN_Y = 600
 hx = SCREEN_X / 2
 hY = SCREEN_Y / 2
 screen = pygame.display.set_mode((SCREEN_X, SCREEN_Y))
+clock = pygame.time.Clock()
 
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -67,6 +68,21 @@ class Factory2(pygame.sprite.Sprite):
     self.fac2_flag = True
     return self.rect.collidepoint(pos)
 
+class Factory3(pygame.sprite.Sprite):
+  def __init__(self):
+    super().__init__()
+    self.fac2_flag = False
+    self.x = 100
+    self.y = 500
+    self.image = pygame.Surface((50, 50), pygame.SRCALPHA)
+    self.image.fill(BLUE)
+    self.rect = self.image.get_rect()
+    self.rect.center = (self.x, self.y)
+
+  def buy(self, pos):
+    self.fac2_flag = True
+    return self.rect.collidepoint(pos)
+
 # ゲームスタート
 def game_start():
   # スプライトのグループ作成
@@ -74,14 +90,17 @@ def game_start():
   factorys = pygame.sprite.LayeredUpdates()
   fac1 = Factory1()
   fac2 = Factory2()
-  sprite_group.add(fac1, fac2)
-  factorys.add(fac2)
+  fac3 = Factory3()
+  sprite_group.add(fac1, fac2, fac3)
   # sprite_group.change_layer(tr, 0)
   # 関数などその他もろもろ
   coin_num = 0
-  rise = 10
+  rise = 1
+  clock_time = 0
   fac2_flag1 = False
   fac2_flag2 = False
+  fac3_flag1 = False
+  fac3_flag2 = False
   # メインループ
   running = True
   money = 100
@@ -94,6 +113,14 @@ def game_start():
         running = False
         sys.exit()
       if event.type == pygame.MOUSEBUTTONDOWN:
+        if fac3.buy(event.pos):
+          if fac3_flag2 == False and fac3_flag1 == True:
+            if coin_num >= 1000:
+              fac3_flag2 = True
+          elif fac3_flag1 == False:
+            if coin_num >= 150:
+              fac3_flag1 = True
+
         if fac2.buy(event.pos):
           if fac2_flag2 == False and fac2_flag1 == True:
             if coin_num >= 500:
@@ -106,6 +133,7 @@ def game_start():
                 coin_num -= 100
             else:
               pass
+
         if fac1.click(event.pos):
           coin_num += rise
           if fac2_flag1 == True:
@@ -118,7 +146,8 @@ def game_start():
     font = pygame.font.Font(None, 45)
     text2 = font.render(F'LET\'S CLICK!', True, (255, 255, 255))
     screen.blit(text2, (103, 80))
-    if fac2_flag1 == True:
+
+    if fac2_flag2 == False and fac2_flag1 == True:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'click + 3$', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
@@ -135,7 +164,32 @@ def game_start():
       text3 = font.render(F'None', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
 
+    if fac3_flag1 == True and fac3_flag2 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 100$/s', True, (255, 255, 255))
+      screen.blit(text3, (65, 530))
+      text4 = font.render(F'need 1000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 545))
+    elif fac3_flag1 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 10$/s', True, (255, 255, 255))
+      screen.blit(text3, (65, 530))
+      text4 = font.render(F'need 150 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 545))
+    else:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'Level MAX', True, (255, 255, 255))
+      screen.blit(text3, (65, 530))
+
+    clock_time += clock.get_time()
+    if clock_time >= 1000:
+      clock_time = 0
+      if fac3_flag2 == True:
+        coin_num += 100
+      elif fac3_flag1 == True:
+        coin_num += 10
     pygame.display.flip()
+    clock.tick(60)
     sprite_group.update()
 
 game_start()
