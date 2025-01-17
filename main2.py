@@ -566,7 +566,7 @@ def game_start():
       screen.fill((WHITE), (400, 325, 30, 30))
       # item10のやつ　afkのやつ
     afk_time += clock.get_time()
-    if afk_time >= 15000 and item10 == False:
+    if afk_time >= 30000 and item10 == False:
       item10 = True
     if item10 == True:
       screen.fill((DOU), (400, 190, 30, 30))
