@@ -117,7 +117,7 @@ def game_start():
   sprite_group.add(fac1, fac2, fac3, fac4, fac5)
   # sprite_group.change_layer(tr, 0)
   # 関数などその他もろもろ
-  coin_num = 90000
+  coin_num = 900000
   rise = 1
   clock_time = 0
   fac2_flag1 = False
@@ -149,23 +149,23 @@ def game_start():
         sys.exit()
       if event.type == pygame.MOUSEBUTTONDOWN:
         # 5オートrise
-        if fac3.buy(event.pos):
-          if fac3_flag4 == False and fac3_flag3 == True:
-            if coin_num >= 6000:
-              fac3_flag4 = True
-              coin_num -= 6000
-          elif fac3_flag3 == False and fac3_flag2 == True:
-            if coin_num >= 1500:
-              fac3_flag3 = True
-              coin_num -= 1500
-          elif fac3_flag2 == False and fac3_flag1 == True:
-            if coin_num >= 800:
-              fac3_flag2 = True
-              coin_num -= 800
-          elif fac3_flag1 == False:
-            if coin_num >= 150:
-              fac3_flag1 = True
-              coin_num -= 150
+        if fac5.buy(event.pos):
+          if fac5_flag4 == False and fac5_flag3 == True:
+            if coin_num >= 25000:
+              fac5_flag4 = True
+              coin_num -= 25000
+          elif fac5_flag3 == False and fac5_flag2 == True:
+            if coin_num >= 20000:
+              fac5_flag3 = True
+              coin_num -= 20000
+          elif fac5_flag2 == False and fac5_flag1 == True:
+            if coin_num >= 14000:
+              fac5_flag2 = True
+              coin_num -= 14000
+          elif fac5_flag1 == False:
+            if coin_num >= 5500:
+              fac5_flag1 = True
+              coin_num -= 5500
 
         # 4オートrise
         if fac4.buy(event.pos):
@@ -332,6 +332,36 @@ def game_start():
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'Level MAX', True, (255, 255, 255))
       screen.blit(text3, (185, 430))
+
+      # ５オート
+    if fac3_flag3 == True and fac3_flag4 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 1000$/s', True, (255, 255, 255))
+      screen.blit(text3, (185, 530))
+      text4 = font.render(F'need 26000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (185, 545))
+    elif fac3_flag2 == True and fac3_flag3 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 700$/s', True, (255, 255, 255))
+      screen.blit(text3, (185, 530))
+      text4 = font.render(F'need 20000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (185, 545))
+    elif fac3_flag1 == True and fac3_flag2 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 450$/s', True, (255, 255, 255))
+      screen.blit(text3, (185, 530))
+      text4 = font.render(F'need 14000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (185, 545))
+    elif fac3_flag1 == False:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'get 300$/s', True, (255, 255, 255))
+      screen.blit(text3, (185, 530))
+      text4 = font.render(F'need 5500 $ ', True, (255, 255, 255))
+      screen.blit(text4, (185, 545))
+    else:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'Level MAX', True, (255, 255, 255))
+      screen.blit(text3, (65, 530))
 # 一秒間に貰えるお金の計算をする場所
     clock_time += clock.get_time()
     if clock_time >= 1000:
@@ -354,6 +384,15 @@ def game_start():
         coin_num += 200
       elif fac4_flag1 == True:
         coin_num += 100
+      # 5オート
+      if fac5_flag4 == True:
+        coin_num += 1000
+      elif fac5_flag3 == True:
+        coin_num += 700
+      elif fac5_flag2 == True:
+        coin_num += 450
+      elif fac5_flag1 == True:
+        coin_num += 300
     pygame.display.flip()
     clock.tick(60)
     sprite_group.update()
