@@ -136,7 +136,7 @@ def game_start():
   sprite_group.add(fac1, fac2, fac3, fac4, fac5, gt)
   # sprite_group.change_layer(tr, 0)
   # 関数などその他もろもろ
-  coin_num = 0
+  coin_num = 900000
   rise = 1
   clock_time = 0
   click_num = 0
@@ -145,6 +145,12 @@ def game_start():
   fac2_flag2 = False
   fac2_flag3 = False
   fac2_flag4 = False
+  fac2_flag5 = False
+  fac2_flag6 = False
+  fac2_flag7 = False
+  fac2_flag8 = False
+  fac2_flag9 = False
+  fac2_flag10 = False
   fac3_flag1 = False
   fac3_flag2 = False
   fac3_flag3 = False
@@ -168,7 +174,7 @@ def game_start():
   res1 = False
   res2 = False
   res3 = False
-
+  res4 = False
   item1 = False
   item2 = False
   item3 = False
@@ -179,6 +185,7 @@ def game_start():
   item8 = False
   item9 = False
   item10 = False
+  item11 = False
   # メインループ
   running = True
   money = 100
@@ -269,7 +276,32 @@ def game_start():
               coin_num -= 150
         # 2クリックrise
         if fac2.buy(event.pos):
-          if fac2_flag4 == False and fac2_flag3 == True:
+          if fac2_flag10 == False and fac2_flag9 == True:
+            if coin_num >= 200000:
+              fac2_flag10 = True
+              res4 = True
+              coin_num -= 200000
+          elif fac2_flag9 == False and fac2_flag8 == True:
+            if coin_num >= 150000:
+              fac2_flag9 = True
+              coin_num -= 150000
+          elif fac2_flag8 == False and fac2_flag7 == True:
+            if coin_num >= 100000:
+              fac2_flag8 = True
+              coin_num -= 100000
+          elif fac2_flag7 == False and fac2_flag6 == True:
+            if coin_num >= 55000:
+              fac2_flag7 = True
+              coin_num -= 55000
+          elif fac2_flag6 == False and fac2_flag5 == True:
+            if coin_num >= 40000:
+              fac2_flag6 = True
+              coin_num -= 40000
+          elif fac2_flag5 == False and fac2_flag4 == True:
+            if coin_num >= 20000:
+              fac2_flag5 = True
+              coin_num -= 20000
+          elif fac2_flag4 == False and fac2_flag3 == True:
             if coin_num >= 10000:
               fac2_flag4 = True
               coin_num -= 10000
@@ -291,12 +323,24 @@ def game_start():
         if fac1.click(event.pos):
           click_num += 1
           afk_time = 0
-          if fac2_flag4 == True:
-            coin_num += 100
+          if fac2_flag10 == True:
+            coin_num += 3000
+          elif fac2_flag9 == True:
+            coin_num += 2500
+          elif fac2_flag8 == True:
+            coin_num += 2000
+          elif fac2_flag7 == True:
+            coin_num += 1500
+          elif fac2_flag6 == True:
+            coin_num += 1000
+          elif fac2_flag5 == True:
+            coin_num += 800
+          elif fac2_flag4 == True:
+            coin_num += 500
           elif fac2_flag3 == True:
-            coin_num += 50
+            coin_num += 100
           elif fac2_flag2 == True:
-            coin_num += 20
+            coin_num += 50
           elif fac2_flag1 == True:
             coin_num += 10
           else:
@@ -308,9 +352,9 @@ def game_start():
           if item2 == True:
             coin_num += 10
           if item7 == True:
-            coin_num += 500
-          if item8 == True:
             coin_num += 1000
+          if item8 == True:
+            coin_num += 3000
 
     font = pygame.font.Font(None, 36)
     text1 = font.render(F'COIN:{coin_num} $', True, (255, 255, 255))
@@ -326,21 +370,57 @@ def game_start():
     screen.blit(text2, (450, 55))
 
     # ２クリック
-    if fac2_flag4 == False and fac2_flag3 == True:
+    if fac2_flag10 == False and fac2_flag9 == True:
       font = pygame.font.Font(None, 20)
-      text3 = font.render(F'click = 100$', True, (255, 255, 255))
+      text3 = font.render(F'click = 3000$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 200000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag9 == False and fac2_flag8 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 2500$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 150000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag8 == False and fac2_flag7 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 2000$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 100000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag7 == False and fac2_flag6 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 1500$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 55000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag6 == False and fac2_flag5 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 1000$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 40000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag5 == False and fac2_flag4 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 800$', True, (255, 255, 255))
+      screen.blit(text3, (65, 430))
+      text4 = font.render(F'need 20000 $ ', True, (255, 255, 255))
+      screen.blit(text4, (65, 445))
+    elif fac2_flag4 == False and fac2_flag3 == True:
+      font = pygame.font.Font(None, 20)
+      text3 = font.render(F'click = 500$', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
       text4 = font.render(F'need 10000 $ ', True, (255, 255, 255))
       screen.blit(text4, (65, 445))
     elif fac2_flag3 == False and fac2_flag2 == True:
       font = pygame.font.Font(None, 20)
-      text3 = font.render(F'click = 50$', True, (255, 255, 255))
+      text3 = font.render(F'click = 100$', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
       text4 = font.render(F'need 3000 $ ', True, (255, 255, 255))
       screen.blit(text4, (65, 445))
     elif fac2_flag2 == False and fac2_flag1 == True:
       font = pygame.font.Font(None, 20)
-      text3 = font.render(F'click = 20$', True, (255, 255, 255))
+      text3 = font.render(F'click = 50$', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
       text4 = font.render(F'need 500 $ ', True, (255, 255, 255))
       screen.blit(text4, (65, 445))
@@ -530,7 +610,7 @@ def game_start():
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : Rera auto machine', True, (255, 255, 255))
       screen.blit(text3, (435, 370))
-      text3 = font.render(F'EFFECT : get 500$/s', True, (255, 255, 255))
+      text3 = font.render(F'EFFECT : get 1000$/s', True, (255, 255, 255))
       screen.blit(text3, (435, 385))
     else:
       screen.fill((WHITE), (400, 370, 30, 30))
@@ -542,7 +622,7 @@ def game_start():
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : Rera click machine', True, (255, 255, 255))
       screen.blit(text3, (435, 415))
-      text3 = font.render(F'EFFECT : click +500$', True, (255, 255, 255))
+      text3 = font.render(F'EFFECT : click +1000$', True, (255, 255, 255))
       screen.blit(text3, (435, 430))
     else:
       screen.fill((WHITE), (400, 415, 30, 30))
@@ -554,7 +634,7 @@ def game_start():
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : God click machine', True, (255, 255, 255))
       screen.blit(text3, (435, 460))
-      text3 = font.render(F'EFFECT : click + 1000$', True, (255, 255, 255))
+      text3 = font.render(F'EFFECT : click + 3000$', True, (255, 255, 255))
       screen.blit(text3, (435, 475))
     else:
       screen.fill((WHITE), (400, 460, 30, 30))
@@ -566,10 +646,22 @@ def game_start():
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : God click machine', True, (255, 255, 255))
       screen.blit(text3, (435, 505))
-      text3 = font.render(F'EFFECT : click + 1000$', True, (255, 255, 255))
+      text3 = font.render(F'EFFECT : click + 3000$', True, (255, 255, 255))
       screen.blit(text3, (435, 520))
     else:
       screen.fill((WHITE), (400, 505, 30, 30))
+      # item11
+    if res4 == True and item11 == False:
+      item9 = True
+    if item9 == True:
+      screen.fill((KIN), (400, 550, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : MAX CLICK PAWER!', True, (255, 255, 255))
+      screen.blit(text3, (435, 550))
+      text3 = font.render(F'EFFECT : Nothing to give.', True, (255, 255, 255))
+      screen.blit(text3, (435, 565))
+    else:
+      screen.fill((WHITE), (400, 550, 30, 30))
 
       # 一秒間に貰えるお金の計算をする場所
     clock_time += clock.get_time()
@@ -610,7 +702,9 @@ def game_start():
       if item1 == True:
         coin_num += 100
       if item6 == True:
-        coin_num += 500
+        coin_num += 1000
+      if item9 == True:
+        coin_num += 3000
     pygame.display.flip()
     clock.tick(60)
     sprite_group.update()
