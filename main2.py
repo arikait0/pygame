@@ -136,7 +136,7 @@ def game_start():
   sprite_group.add(fac1, fac2, fac3, fac4, fac5, gt)
   # sprite_group.change_layer(tr, 0)
   # 関数などその他もろもろ
-  coin_num = 900000
+  coin_num = 0
   rise = 1
   clock_time = 0
   click_num = 0
@@ -652,8 +652,8 @@ def game_start():
       screen.fill((WHITE), (400, 505, 30, 30))
       # item11
     if res4 == True and item11 == False:
-      item9 = True
-    if item9 == True:
+      item11 = True
+    if item11 == True:
       screen.fill((KIN), (400, 550, 30, 30))
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : MAX CLICK PAWER!', True, (255, 255, 255))
