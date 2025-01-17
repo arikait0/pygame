@@ -658,7 +658,7 @@ def game_start():
       font = pygame.font.Font(None, 24)
       text3 = font.render(F'NAME : MAX CLICK PAWER!', True, (255, 255, 255))
       screen.blit(text3, (435, 550))
-      text3 = font.render(F'EFFECT : Nothing to give.', True, (255, 255, 255))
+      text3 = font.render(F'EFFECT : get 3000$/s', True, (255, 255, 255))
       screen.blit(text3, (435, 565))
     else:
       screen.fill((WHITE), (400, 550, 30, 30))
@@ -704,6 +704,8 @@ def game_start():
       if item6 == True:
         coin_num += 1000
       if item9 == True:
+        coin_num += 3000
+      if item11 == True:
         coin_num += 3000
     pygame.display.flip()
     clock.tick(60)
