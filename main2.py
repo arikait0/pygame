@@ -1,6 +1,7 @@
 import pygame
 import sys
 import numpy as np
+import random as r
 
 
 pygame.init()
@@ -19,6 +20,9 @@ BLUE = (0, 0, 255)
 YALLOW = (255, 255, 0)
 GRAY = (150, 150, 150)
 GRAYS = pygame.Color(150, 150, 150, 50)
+DOU = (134, 74, 43)
+GIN = (192, 192, 192)
+KIN = (255, 215, 0)
 
 
 class Player(pygame.sprite.Sprite):
@@ -104,6 +108,20 @@ class Factory5(pygame.sprite.Sprite):
 
   def buy(self, pos):
     return self.rect.collidepoint(pos)
+
+class Gatya(pygame.sprite.Sprite):
+  def __init__(self):
+    super().__init__()
+    self.x = 420
+    self.y = 50
+    self.image = pygame.Surface((50, 50), pygame.SRCALPHA)
+    self.image.fill(BLUE)
+    self.rect = self.image.get_rect()
+    self.rect.center = (self.x, self.y)
+
+  def gatya(self, pos):
+    return self.rect.collidepoint(pos)
+
 # ゲームスタート
 def game_start():
   # スプライトのグループ作成
@@ -114,12 +132,15 @@ def game_start():
   fac3 = Factory3()
   fac4 = Factory4()
   fac5 = Factory5()
-  sprite_group.add(fac1, fac2, fac3, fac4, fac5)
+  gt = Gatya()
+  sprite_group.add(fac1, fac2, fac3, fac4, fac5, gt)
   # sprite_group.change_layer(tr, 0)
   # 関数などその他もろもろ
-  coin_num = 900000
+  coin_num = 0
   rise = 1
   clock_time = 0
+  click_num = 0
+  afk_time = 0
   fac2_flag1 = False
   fac2_flag2 = False
   fac2_flag3 = False
@@ -136,6 +157,28 @@ def game_start():
   fac5_flag2 = False
   fac5_flag3 = False
   fac5_flag4 = False
+
+  gt_flag1 = False
+  gt_flag2 = False
+  gt_flag3 = False
+  gt_flag4 = False
+  gt_flag5 = False
+  gt_flag6 = False
+
+  res1 = False
+  res2 = False
+  res3 = False
+
+  item1 = False
+  item2 = False
+  item3 = False
+  item4 = False
+  item5 = False
+  item6 = False
+  item7 = False
+  item8 = False
+  item9 = False
+  item10 = False
   # メインループ
   running = True
   money = 100
@@ -148,6 +191,26 @@ def game_start():
         running = False
         sys.exit()
       if event.type == pygame.MOUSEBUTTONDOWN:
+        # 5オートrise
+        if gt.gatya(event.pos):
+          if coin_num >= 10000:
+            coin_num -= 10000
+            rank = [1, 2, 3, 4, 5, 6]
+            p = [5, 5, 15, 15, 60, 60]
+            c = r.choices(rank, weights=p, k=1)
+            if c[0] == 1:
+              gt_flag1 = True
+            elif c[0] == 2:
+              gt_flag2 = True
+            elif c[0] == 3:
+              gt_flag3 = True
+            elif c[0] == 4:
+              gt_flag4 = True
+            elif c[0] == 5:
+              gt_flag5 = True
+            elif c[0] == 6:
+              gt_flag6 = True
+
         # 5オートrise
         if fac5.buy(event.pos):
           if fac5_flag4 == False and fac5_flag3 == True:
@@ -226,6 +289,8 @@ def game_start():
             pass
         # メインクリック
         if fac1.click(event.pos):
+          click_num += 1
+          afk_time = 0
           if fac2_flag4 == True:
             coin_num += 100
           elif fac2_flag3 == True:
@@ -236,17 +301,34 @@ def game_start():
             coin_num += 10
           else:
             coin_num += rise
+          if item3 == True:
+            coin_num += 1000
+          if item4 == True:
+            coin_num += 100
+          if item2 == True:
+            coin_num += 10
+          if item7 == True:
+            coin_num += 500
+          if item8 == True:
+            coin_num += 1000
+
     font = pygame.font.Font(None, 36)
     text1 = font.render(F'COIN:{coin_num} $', True, (255, 255, 255))
     screen.blit(text1, (10, 10))
     font = pygame.font.Font(None, 45)
     text2 = font.render(F'LET\'S CLICK!', True, (255, 255, 255))
     screen.blit(text2, (103, 80))
+    font = pygame.font.Font(None, 30)
+    text2 = font.render(F'Item Gatya! left Click! ', True, (255, 255, 255))
+    screen.blit(text2, (450, 30))
+    font = pygame.font.Font(None, 25)
+    text2 = font.render(F'need 10000$ ', True, (255, 255, 255))
+    screen.blit(text2, (450, 55))
 
     # ２クリック
     if fac2_flag4 == False and fac2_flag3 == True:
       font = pygame.font.Font(None, 20)
-      text3 = font.render(F'click + 100$', True, (255, 255, 255))
+      text3 = font.render(F'click = 100$', True, (255, 255, 255))
       screen.blit(text3, (65, 430))
       text4 = font.render(F'need 10000 $ ', True, (255, 255, 255))
       screen.blit(text4, (65, 445))
@@ -363,7 +445,133 @@ def game_start():
       text3 = font.render(F'Level MAX', True, (255, 255, 255))
       screen.blit(text3, (185, 530))
 
-# 一秒間に貰えるお金の計算をする場所
+    # アイテム・実績などの管理
+    if coin_num >= 10000 and res1 == False:
+      item1 = True
+      res1 = True
+    if item1 == True:
+      screen.fill((DOU), (400, 100, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : First 10000$', True, (255, 255, 255))
+      screen.blit(text3, (435, 100))
+      text3 = font.render(F'EFFECT : get 100$/s', True, (255, 255, 255))
+      screen.blit(text3, (435, 115))
+    else:
+      screen.fill((WHITE), (400, 100, 30, 30))
+      #
+    if click_num >= 100 and res2 == False:
+      item2 = True
+      res2 = True
+    if item2 == True:
+      screen.fill((DOU), (400, 145, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : 100 Clicker', True, (255, 255, 255))
+      screen.blit(text3, (435, 145))
+      text3 = font.render(F'EFFECT : Click + 10$', True, (255, 255, 255))
+      screen.blit(text3, (435, 160))
+    else:
+      screen.fill((WHITE), (400, 145, 30, 30))
+      # 3
+    if click_num >= 1000 and res3 == False:
+      item3 = True
+      res3 = True
+    if item3 == True:
+      screen.fill((GIN), (400, 325, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : 1000 Clicker', True, (255, 255, 255))
+      screen.blit(text3, (435, 325))
+      text3 = font.render(F'EFFECT : Click + 1000$', True, (255, 255, 255))
+      screen.blit(text3, (435, 340))
+    else:
+      screen.fill((WHITE), (400, 325, 30, 30))
+      # item10のやつ　afkのやつ
+    afk_time += clock.get_time()
+    if afk_time >= 15000 and item10 == False:
+      item10 = True
+    if item10 == True:
+      screen.fill((DOU), (400, 190, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : Perhaps neglected?', True, (255, 255, 255))
+      screen.blit(text3, (435, 190))
+      text3 = font.render(F'EFFECT : I want you to click more!',
+                          True, (255, 255, 255))
+      screen.blit(text3, (435, 205))
+    else:
+      screen.fill((WHITE), (400, 190, 30, 30))
+      # 6 ガチャ
+    if gt_flag6 == True and item4 == False:
+      item4 = True
+    if item4 == True:
+      screen.fill((DOU), (400, 235, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : click machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 235))
+      text3 = font.render(F'EFFECT : Click + 100$', True, (255, 255, 255))
+      screen.blit(text3, (435, 250))
+    else:
+      screen.fill((WHITE), (400, 235, 30, 30))
+      # 5 ガチャ
+    if gt_flag5 == True and item5 == False:
+      item5 = True
+    if item5 == True:
+      screen.fill((DOU), (400, 280, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : auto machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 280))
+      text3 = font.render(F'EFFECT : get 100$/s', True, (255, 255, 255))
+      screen.blit(text3, (435, 295))
+    else:
+      screen.fill((WHITE), (400, 280, 30, 30))
+      # 4 ガチャ
+    if gt_flag4 == True and item6 == False:
+      item6 = True
+    if item6 == True:
+      screen.fill((GIN), (400, 370, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : Rera auto machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 370))
+      text3 = font.render(F'EFFECT : get 500$/s', True, (255, 255, 255))
+      screen.blit(text3, (435, 385))
+    else:
+      screen.fill((WHITE), (400, 370, 30, 30))
+      # 3 ガチャ item7
+    if gt_flag3 == True and item7 == False:
+      item7 = True
+    if item7 == True:
+      screen.fill((GIN), (400, 415, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : Rera click machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 415))
+      text3 = font.render(F'EFFECT : click +500$', True, (255, 255, 255))
+      screen.blit(text3, (435, 430))
+    else:
+      screen.fill((WHITE), (400, 415, 30, 30))
+      # 2 ガチャ item8
+    if gt_flag2 == True and item8 == False:
+      item8 = True
+    if item8 == True:
+      screen.fill((KIN), (400, 460, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : God click machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 460))
+      text3 = font.render(F'EFFECT : click + 1000$', True, (255, 255, 255))
+      screen.blit(text3, (435, 475))
+    else:
+      screen.fill((WHITE), (400, 460, 30, 30))
+      # 1 ガチャ item9
+    if gt_flag1 == True and item9 == False:
+      item9 = True
+    if item9 == True:
+      screen.fill((KIN), (400, 505, 30, 30))
+      font = pygame.font.Font(None, 24)
+      text3 = font.render(F'NAME : God click machine', True, (255, 255, 255))
+      screen.blit(text3, (435, 505))
+      text3 = font.render(F'EFFECT : click + 1000$', True, (255, 255, 255))
+      screen.blit(text3, (435, 520))
+    else:
+      screen.fill((WHITE), (400, 505, 30, 30))
+
+      # 一秒間に貰えるお金の計算をする場所
     clock_time += clock.get_time()
     if clock_time >= 1000:
       clock_time = 0
@@ -394,6 +602,15 @@ def game_start():
         coin_num += 450
       elif fac5_flag1 == True:
         coin_num += 300
+        # アイテム効果
+      if item5 == True:
+        coin_num += 100
+      if item5 == True:
+        coin_num += 100
+      if item1 == True:
+        coin_num += 100
+      if item6 == True:
+        coin_num += 500
     pygame.display.flip()
     clock.tick(60)
     sprite_group.update()
