@@ -304,25 +304,25 @@ def game_start():
       screen.blit(text3, (65, 530))
 
       # ４オート
-    if fac3_flag3 == True and fac3_flag4 == False:
+    if fac4_flag3 == True and fac4_flag4 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 500$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 430))
       text4 = font.render(F'need 16000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 445))
-    elif fac3_flag2 == True and fac3_flag3 == False:
+    elif fac4_flag2 == True and fac4_flag3 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 350$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 430))
       text4 = font.render(F'need 10000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 445))
-    elif fac3_flag1 == True and fac3_flag2 == False:
+    elif fac4_flag1 == True and fac4_flag2 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 200$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 430))
       text4 = font.render(F'need 5000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 445))
-    elif fac3_flag1 == False:
+    elif fac4_flag1 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 100$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 430))
@@ -334,25 +334,25 @@ def game_start():
       screen.blit(text3, (185, 430))
 
       # ５オート
-    if fac3_flag3 == True and fac3_flag4 == False:
+    if fac5_flag3 == True and fac5_flag4 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 1000$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 530))
       text4 = font.render(F'need 26000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 545))
-    elif fac3_flag2 == True and fac3_flag3 == False:
+    elif fac5_flag2 == True and fac5_flag3 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 700$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 530))
       text4 = font.render(F'need 20000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 545))
-    elif fac3_flag1 == True and fac3_flag2 == False:
+    elif fac5_flag1 == True and fac5_flag2 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 450$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 530))
       text4 = font.render(F'need 14000 $ ', True, (255, 255, 255))
       screen.blit(text4, (185, 545))
-    elif fac3_flag1 == False:
+    elif fac5_flag1 == False:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'get 300$/s', True, (255, 255, 255))
       screen.blit(text3, (185, 530))
@@ -361,7 +361,8 @@ def game_start():
     else:
       font = pygame.font.Font(None, 20)
       text3 = font.render(F'Level MAX', True, (255, 255, 255))
-      screen.blit(text3, (65, 530))
+      screen.blit(text3, (185, 530))
+
 # 一秒間に貰えるお金の計算をする場所
     clock_time += clock.get_time()
     if clock_time >= 1000:
